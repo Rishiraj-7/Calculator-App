@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator App</title>
+<link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+    <div class="container">
+        <h1 id="name">Calculator App</h1>
+        <div class="calculator">
+          <div class="display">
+          <input type="text" id="screen" readonly>
+          </div>
+          <button >AC</button>
+          <button>()</button>
+          <button>%</button>
+          <button>/</button>
+            
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>×</button>
+            
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>-</button>
+            
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>+</button>
+            
+            <button>0</button>
+            <button>.</button>
+            <button>del</button>
+            <button>=</button>
+        </div>
+        </div>
+
+
+<script>
+
+const screen = document.getElementById('screen');
+
+
+let currentInput = '';
+let previousInput = '';
+let operator = '';
+let displayOperator = '';
+let shouldResetDisplay = false;
+let justCalculated = false;
+
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const buttonText = button.innerText;
+        
+        // Handle different button types
+        if (isNumber(buttonText)) {
+            handleNumber(buttonText);
+        } else if (isOperator(buttonText)) {
+            handleOperator(buttonText);
+        } else if (buttonText === '=') {
+            calculate();
+        } else if (buttonText === 'AC') {
+            clearAll();
+        } else if (buttonText === 'del') {
+            deleteLast();
+        } else if (buttonText === '%') {
+            handlePercent();
+        }
+    });
+});
+
+
+function isNumber(value) {
+    return !isNaN(value) || value === '.';
+}
+
+
+function isOperator(value) {
+    return ['+', '-', '×', '÷', '/'].includes(value);
+}
+
+
+function handleNumber(number) {
+    if (shouldResetDisplay || justCalculated) {
+        currentInput = '';
+        shouldResetDisplay = false;
+        justCalculated = false;
+    }
+    
+    
+    if (number === '.' && currentInput.includes('.')) {
+        return;
+    }
+    
+    currentInput += number;
+    updateDisplay();
+}
+
+
+function handleOperator(nextOperator) {
+    if (currentInput === '' && previousInput === '') {
+        return;
+    }
+    
+    
+    if (justCalculated) {
+        previousInput = currentInput;
+        justCalculated = false;
+    } else if (previousInput !== '' && currentInput !== '' && operator !== '') {
+        
+        performCalculation();
+        previousInput = currentInput;
+    } else {
+        previousInput = currentInput || previousInput;
+    }
+    
+    operator = nextOperator === '×' ? '*' : nextOperator === '÷' ? '/' : nextOperator;
+    displayOperator = nextOperator;
+    currentInput = '';
+    shouldResetDisplay = false;
+    updateDisplay();
+}
+
+
+function calculate() {
+    if (previousInput === '' || currentInput === '' || operator === '') {
+        return;
+    }
+    
+    performCalculation();
+    
+    
+    operator = '';
+    displayOperator = '';
+    previousInput = '';
+    shouldResetDisplay = true;
+    justCalculated = true;
+    updateDisplay();
+}
+
+
+function performCalculation() {
+    const prev = parseFloat(previousInput);
+    const current = parseFloat(currentInput);
+    let result;
+    
+    switch (operator) {
+        case '+':
+            result = prev + current;
+            break;
+        case '-':
+            result = prev - current;
+            break;
+        case '*':
+            result = prev * current;
+            break;
+        case '/':
+            if (current === 0) {
+                alert('Cannot divide by zero!');
+                return;
+            }
+            result = prev / current;
+            break;
+        default:
+            return;
+    }
+    
+    
+    result = Math.round(result * 100000000) / 100000000;
+    currentInput = result.toString();
+}
+
+
+function clearAll() {
+    currentInput = '';
+    previousInput = '';
+    operator = '';
+    displayOperator = '';
+    shouldResetDisplay = false;
+    justCalculated = false;
+    updateDisplay();
+}
+
+
+function deleteLast() {
+    if (currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+        updateDisplay();
+    } else if (displayOperator !== '') {
+        
+        displayOperator = '';
+        operator = '';
+        currentInput = previousInput;
+        previousInput = '';
+        updateDisplay();
+    }
+}
+
+
+function handlePercent() {
+    if (currentInput !== '') {
+        currentInput = (parseFloat(currentInput) / 100).toString();
+        updateDisplay();
+        shouldResetDisplay = true;
+    }
+}
+
+
+function updateDisplay() {
+    let displayValue = '';
+    
+    if (previousInput !== '' && displayOperator !== '' && currentInput !== '') {
+        // Show full expression: "2 + 3"
+        displayValue = previousInput + ' ' + displayOperator + ' ' + currentInput;
+    } else if (previousInput !== '' && displayOperator !== '') {
+        // Show partial expression: "2 +"
+        displayValue = previousInput + ' ' + displayOperator;
+    } else if (currentInput !== '') {
+        // Show current input: "2"
+        displayValue = currentInput;
+    } else {
+        // Show zero when empty
+        displayValue = '0';
+    }
+    
+    screen.value = displayValue;
+}
+
+
+updateDisplay();
+</script>
+ 
+<footer>
+  <div class="footer-content">
+    <p>&copy; 2025 Calculator App. All rights reserved.</p>
+    <p>Developed by <strong>Rishiraj Singh.</strong></p>
+    <p>Built with HTML, CSS & JavaScript</p>
+  </div>
+</footer>
+
+
+
+
+
+</body>
+</html>

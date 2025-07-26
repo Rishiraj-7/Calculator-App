@@ -1,0 +1,132 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box; 
+  }
+#name{
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+    border: 2px solid black;
+    border-radius: 100px;
+    background-color: blueviolet;
+    margin: 50px;
+    padding: 10px 20px;
+    width: fit-content;
+    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.5);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+}
+
+.calculator {
+    max-width: 400px;
+    min-width: 300px;
+    display: grid;
+    grid-template-rows: auto repeat(5,1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    border: 2px solid black;
+    padding: 50px;
+    margin: 50px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+
+}
+
+button{
+  padding: 20px;
+  font-size: 1.2rem;
+  border: 2px solid black;
+  border-radius: 100px;
+  background-color: #212121; 
+  color: white;
+  
+}
+@media (max-width: 768px) {
+button {
+  padding: 15px;
+  font-size: 1.1rem;
+}
+}
+
+@media (max-width: 480px) {
+.calculator {
+  padding: 20px;
+  margin: 20px;
+}
+
+#name {
+  font-size: 1.5rem;
+  margin: 20px;
+}
+}
+#screen {
+font-size: clamp(1.2rem, 4vw, 2rem);
+}
+button {
+min-height: 44px; /* Apple's recommended touch target */
+min-width: 44px;
+}
+
+
+@media (max-width: 768px) {
+.container {
+  padding: 10px;
+}
+}
+.display{
+ grid-column: 1/-1;
+ margin-bottom: 10px;
+}
+#screen{
+  width: 100%;
+  height: 60px;
+  font: 2rem;
+  text-align:right;
+  border: 2px solid black;
+  border-radius: 50px;
+  padding: 0 15px;
+  outline: none;
+  #screen {
+overflow: hidden;
+white-space: nowrap;
+}
+  
+
+}
+button:hover{
+transform: scale(1.05); 
+transition: all 0.3s ease;
+}
+footer {
+background: rgba(0, 0, 0, 0.8);
+color: white;
+text-align: center;
+padding: 20px;
+margin-top: auto;
+border-top: 2px solid #333;
+}
+
+.footer-content p {
+margin: 5px 0;
+font-size: 0.9rem;
+}
+
+.footer-content strong {
+color: #667eea;
+font-weight: bold;
+}
+
+footer p:first-child {
+font-size: 1rem;
+margin-bottom: 10px;
+}
+  

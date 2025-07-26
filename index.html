@@ -61,7 +61,7 @@ buttons.forEach(button => {
     button.addEventListener('click', () => {
         const buttonText = button.innerText;
         
-        // Handle different button types
+        
         if (isNumber(buttonText)) {
             handleNumber(buttonText);
         } else if (isOperator(buttonText)) {
@@ -219,16 +219,16 @@ function updateDisplay() {
     let displayValue = '';
     
     if (previousInput !== '' && displayOperator !== '' && currentInput !== '') {
-        // Show full expression: "2 + 3"
+       
         displayValue = previousInput + ' ' + displayOperator + ' ' + currentInput;
     } else if (previousInput !== '' && displayOperator !== '') {
-        // Show partial expression: "2 +"
+        
         displayValue = previousInput + ' ' + displayOperator;
     } else if (currentInput !== '') {
-        // Show current input: "2"
+        
         displayValue = currentInput;
     } else {
-        // Show zero when empty
+       
         displayValue = '0';
     }
     
